@@ -1,0 +1,66 @@
+﻿@using MeetupApi.MvcApp.Utility
+@using MeetupApi.MvcApp.ViewModels
+@*@model IEnumerable<MeetupApi.MvcApp.ViewModels.EventViewModel>
+*@
+
+@model IndexViewModel
+
+@addTagHelper *, MeetupApi.MvcApp
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Events list</h1>
+
+<form method="get">
+    <div class="form-inline form-group">
+        <label class="control-label">Theme: </label>
+        <input name="theme" class="form-control" placeholder="All"/>
+ 
+        <input type="submit" value="Search" class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Theme
+            </th>
+            <th>
+                Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Events)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Theme)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark" style="margin-right:10px">Details</a>
+                    @if(Convert.ToBoolean(Context.Request.Cookies[CookiesKeys.IsAuthenticated]) & Context.Request.Cookies[CookiesKeys.UserRole] == "User")
+                    {
+                        @if(item.IsSubscribed == true)
+                        {
+                            <a asp-action="Unsubscribe" asp-route-id="@item.Id" class="btn btn-outline-danger">Unubscribe</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Subscribe" asp-route-id="@item.Id" class="btn btn-outline-success">Subscribe</a>
+
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<page-link page-model="Model.PageViewModel" page-action="Index" ></page-link>

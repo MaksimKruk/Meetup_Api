@@ -1,0 +1,43 @@
+﻿@using MeetupApi.MvcApp.ViewModels
+@model LoginViewModel
+
+<h2 style="margin-bottom:20px">Log Into your account</h2>
+  
+<form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" style="width:30%">
+    <div class="validation" asp-validation-summary="ModelOnly" class="text-danger" ></div>
+    <div>
+        <div>
+        <label asp-for="Username" class="control-label"></label><br />
+        <input type="text" asp-for="Username" class="form-control"/>
+        <span asp-validation-for="Username" class="text-danger" ></span>
+    </div>
+    <div>
+        <label asp-for="Password" class="control-label"></label><br />
+        <input asp-for="Password" class="form-control"/>
+        <span asp-validation-for="Password" class="text-danger" ></span>
+    </div>
+        <div class="form-group">
+            <input type="submit" value="Log In" class="btn btn-outline-dark" style="margin-top:10px;margin-bottom:10px"/>
+        </div>
+        <a asp-action="Register" asp-controller="Account">Create new account</a>
+    </div>
+</form>
+    <div>
+        <div style="padding-top:50px;">
+            <div>
+                <b>Please login with the below data to obtain administrator or user rights. Password is <span style="font-size:large;color:forestgreen;">Password@123</span></b>
+            </div>
+            <div style="padding-top:10px;">
+                <ui style="list-style: none;">
+                    <li>admin  -  Administrator</li>
+                    <li>user4  -  User</li>
+                </ui>
+            </div>
+        </div>
+    </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

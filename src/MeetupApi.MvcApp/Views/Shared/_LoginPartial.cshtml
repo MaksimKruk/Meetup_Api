@@ -1,0 +1,35 @@
+﻿@using MeetupApi.MvcApp.Utility
+
+@{
+    ViewData["Title"] = "Log In";
+}
+
+<ul class="navbar-nav">
+@if (Convert.ToBoolean(Context.Request.Cookies[CookiesKeys.IsAuthenticated]))
+    {
+         <li class="nav-item">
+         <a class="nav-link text-dark" asp-area="Identity" 
+         asp-page="/Account/Manage/Index" title="Manage">Hello 
+         @Context.Request.Cookies[CookiesKeys.Username]!</a>
+         </li>
+         <li class="nav-item">
+         <form class="form-inline" asp-controller="Account" asp-action="LogOut" 
+         asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" 
+         asp-area="Identity" method="post" >
+         <button class="nav-link btn btn-link text-dark"
+            type="submit">Logout</button>
+         </form>
+         </li>
+    }
+else
+    {
+         <li class="nav-item">
+         <a class="nav-link text-dark" asp-area="Identity" 
+         asp-controller="Account" asp-action="Register">Register</a>
+         </li>
+         <li class="nav-item">
+         <a class="nav-link text-dark" asp-area="Identity" 
+         asp-controller="Account" asp-action="Login">Log In</a>
+         </li>
+    }
+</ul>
